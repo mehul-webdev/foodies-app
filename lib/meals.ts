@@ -2,15 +2,22 @@ import sql from "better-sqlite3";
 import slugify from "slugify";
 import xss from "xss";
 import { S3 } from "@aws-sdk/client-s3";
+import path from "path";
 
 import type {
   MealItemProps,
   MealItemSaveProps,
 } from "@/components/meals/types";
 
-const db = sql("meals.db");
+const dbPath = path.join(process.cwd(), "meals.db");
+const db = sql(dbPath);
+
 const s3 = new S3({
   region: "ap-south-1",
+  credentials: {
+    accessKeyId: process.env.ACCESS_KEY_ID!,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY!,
+  },
 });
 
 export async function getMeals() {

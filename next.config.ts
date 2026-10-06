@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
-const nextConfig = {
+const nextConfig: NextConfig = {
+  outputFileTracingIncludes: {
+    "/*": ["./meals.db"],
+  },
   images: {
     remotePatterns: [
       {
