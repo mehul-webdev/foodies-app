@@ -12,3 +12,13 @@ export interface MealItemProps {
   creator_email: string;
   instructions: string;
 }
+
+export interface MealItemSaveProps {
+  title: string;
+  image: File;
+  summary: string;
+  creator: string;
+  creator_email: string;
+  instructions: string;
+  slug: string;
+}
