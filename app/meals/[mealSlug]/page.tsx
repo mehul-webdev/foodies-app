@@ -4,6 +4,24 @@ import Link from "next/link";
 import { getMeal } from "@/lib/meals";
 import classes from "./page.module.css";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ mealSlug: string }>;
+}) {
+  const { mealSlug } = await params;
+  const meal = await getMeal(mealSlug);
+
+  if (!meal) {
+    notFound();
+  }
+
+  return {
+    title: meal.title,
+    description: meal.summary,
+  };
+}
+
 const MealDetailsPage = async ({
   params,
 }: {
@@ -22,7 +40,11 @@ const MealDetailsPage = async ({
     <>
       <header className={classes.header}>
         <div className={classes.image}>
-          <Image src={meal.image} alt={meal.title} fill />
+          <Image
+            src={`https://mehul-nextjs-foodie-app.s3.ap-south-1.amazonaws.com/${meal.image}`}
+            alt={meal.title}
+            fill
+          />
         </div>
         <div className={classes.headerText}>
           <h1>{meal.title}</h1>
